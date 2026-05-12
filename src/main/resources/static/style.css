@@ -1,0 +1,52 @@
+/* Scrollbar personalizado */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #475569;
+    border-radius: 10px;
+}
+
+/* Campos de entrada */
+.input-field {
+    background-color: #334155;
+    border: none;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    color: white;
+    outline: none;
+    transition: all 0.2s;
+}
+.input-field:focus {
+    box-shadow: 0 0 0 2px #3b82f6;
+}
+
+/* Botón de envío */
+.btn-send {
+    background-color: #2563eb;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+.btn-send:hover {
+    background-color: #1d4ed8;
+}
+.btn-send:active {
+    transform: scale(0.95);
+}
+
+/* Animación de entrada de mensajes */
+.message-in {
+    animation: fadeInUp;
+    animation-duration: 0.4s;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
