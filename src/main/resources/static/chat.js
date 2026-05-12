@@ -4,6 +4,14 @@ let stompClient = null;
 document.addEventListener('DOMContentLoaded', () => {
     loadHistory();
     connect();
+    const messageInput = document.getElementById('message');
+    messageInput.addEventListener('keypress', function (event) {
+        // Verificar si la tecla presionada es 'Enter'
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            sendMessage();
+        }
+    });
 });
 
 // 1. Cargar historial desde MySQL (API REST)
