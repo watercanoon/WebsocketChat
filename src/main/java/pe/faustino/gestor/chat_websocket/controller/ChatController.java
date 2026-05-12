@@ -7,27 +7,35 @@ import org.springframework.web.bind.annotation.*;
 import pe.faustino.gestor.chat_websocket.entity.ChatMessage;
 import pe.faustino.gestor.chat_websocket.repository.MessageRepository;
 
-import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*") // Permite peticiones desde el frontend
+@CrossOrigin(origins = "*")
 public class ChatController {
 
     @Autowired
     private MessageRepository repository;
 
-    // API REST: Cargar historial con Fetch
     @GetMapping("/api/messages")
     public List<ChatMessage> getHistory() {
         return repository.findAll();
     }
 
-    // WEBSOCKET: Recibe mensajes de /app/chat.sendMessage y los envía a /topic/public
     @MessageMapping("/chat.sendMessage")
     @SendTo("/topic/public")
     public ChatMessage sendMessage(ChatMessage chatMessage) {
-        chatMessage.setTimestamp(LocalDateTime.now().toString());
-        return repository.save(chatMessage); // Guarda en MySQL y retransmite
+        // 1. Obtener la hora exacta de Perú
+        ZonedDateTime nowInPeru = ZonedDateTime.now(ZoneId.of("America/Lima"));
+
+        // 2. Definir un formato limpio y profesional (Ejemplo: 12/05/2026 15:35:28)
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+        // 3. Aplicar el formato al mensaje
+        chatMessage.setTimestamp(nowInPeru.format(formatter));
+
+        return repository.save(chatMessage);
     }
 }
